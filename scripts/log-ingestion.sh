@@ -60,7 +60,6 @@ echo "Small log file execution and Analysis completed"
 # so small files should be combined into larger files before storing in HDFS.
 
 
-
 # ----------------------------------------------------------------------------------------------
 # Task 3: Large Log File Scalability Test
 
@@ -106,23 +105,23 @@ hdfs dfs -ls -h $L_INPUT_DIR
 echo "Running HDFS FSCK (block analysis)..."
 hdfs fsck $L_INPUT_DIR/access.log -files -blocks
 
-# Step 6: Number of blocks created
+# Step 6: Check Block size
+echo "Checking the bolck size..."
+hdfs dfs -stat %o $L_INPUT_DIR/access.log
+
+
+# Step 7: Number of blocks created
 echo "Number of blocks created are: "
 hdfs fsck $L_INPUT_DIR -files -blocks | grep "Total blocks"
 
 echo "Large log file execution and Analysis completed"
 
-
-
-
-
-
-
-
-
-
-
-
+# 1.Explain how block size impacts parallelism, storage, and fault tolerance
+# Block size in Hadoop directly affects parallelism, storage efficiency, and fault tolerance. 
+# Smaller blocks increase parallelism but create more metadata overhead on the NameNode. 
+# Larger blocks reduce metadata and improve storage efficiency but may reduce parallelism. 
+# Fault tolerance is handled through replication, and block size influences recovery 
+# performance during node failures
 
 
 
