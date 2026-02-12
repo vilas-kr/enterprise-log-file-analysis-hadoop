@@ -17,8 +17,8 @@
 # --------------------------------------------------------------------------------------------
 
 # Shell variables
-INPUT_DIR=/large-log-file-analytics/input
-OUTPUT_DIR=/large-log-file-analytics/output
+INPUT_DIR=/small-log-file-analytics/input
+OUTPUT_DIR=/small-log-file-analytics/output
 
 echo "Word count uisng built-in map reducer shell script started..."
 
