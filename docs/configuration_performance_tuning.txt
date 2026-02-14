@@ -1,0 +1,77 @@
+Phase 7: Hadoop Configuration and Performance Tuning
+
+1. Study Hadoop configuration files:
+The following core configuration files are analyzed:
+1. core-site.xml – This file contains all the configurations for Hadoop I/O.
+2. hdfs-site.xml – This file contains all the configurations for HDFS storage and block management.
+3. mapred-site.xml – This file contains all the configurations for MapReduce execution settings.
+4. yarn-site.xml – This file contains all the configurations for YARN resource allocation and scheduling.
+
+2. Identify critical properties related to:
+    Performance degradation under heavy log volume in a cluster using Apache Hadoop usually occurs
+    due to inefficient configuration of HDFS, MapReduce, and YARN resource settings. Proper tuning 
+    of these components improves throughput, job execution speed, and resource utilization
+    
+    1. HDFS Block Management Configuration
+        i. dfs.blocksize
+            Defines HDFS block size (default often 128 MB).
+            Recommended change: Increase block size (e.g., 256–512 MB) for large log files.
+            Impact:
+                Fewer blocks → reduced metadata overhead.
+                Faster sequential processing.
+                Better disk throughput.
+
+        ii. dfs.replication
+            Number of replicas for each block (default 3).
+            Recommended change: Reduce slightly e.g 2 if storage/network bottlenecks occur.
+            Impact:
+                Lower network traffic.
+                Faster writes.
+                Slight reduction in fault tolerance.
+
+        iii. NameNode Memory Allocation
+            Ensure sufficient memory for metadata.
+            Impact:
+                Prevents NameNode slowdown.
+                Faster block lookup and job startup.
+
+    2. MapReduce Execution Configuration
+        i. mapreduce.map.memory.mb
+            Memory allocated per mapper.
+            Increase if:
+                Tasks fail or run slowly due to memory shortage.
+            Impact:
+                Reduces task failures.
+                Improves mapper performance.
+
+        ii. mapreduce.reduce.memory.mb
+            Memory for reducers.
+            Impact:
+                Faster aggregation.
+                Reduced disk spilling.
+        
+        iii. mapreduce.task.io.sort.mb
+            Buffer size before writing intermediate data to disk.
+            Increase value to:
+                Reduce disk I/O.
+                Speed up shuffle phase.
+
+    3. YARN Resource Allocation
+        i. yarn.nodemanager.resource.memory-mb
+            Total memory available per node.
+            Increase if system RAM allows.
+            Impact:
+                Supports more containers.
+                Higher job concurrency.
+        
+        ii. yarn.scheduler.maximum-allocation-mb
+            Maximum memory per container.
+            Impact:
+                Prevents oversized containers.
+                Ensures balanced resource usage
+        
+        iii. yarn.nodemanager.resource.cpu-vcores
+            CPU cores per node.
+            Impact:
+                Better CPU scheduling.
+                Improved parallel execution.
