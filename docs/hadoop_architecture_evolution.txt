@@ -1,0 +1,115 @@
+Phase 6: Hadoop Architecture Evolution Study
+
+Hadoop is an open source framework overseen by Apache Software Foundation which is written in 
+Java for storing and processing of huge datasets with the cluster of commodity hardware. There 
+are mainly two problems with the big data. First one is to store such a huge amount of data and 
+the second one is to process that stored data. The traditional approach like RDBMS is not 
+sufficient due to the heterogeneity of the data. So Hadoop comes as the solution to the problem 
+of big data i.e. storing and processing the big data with some extra capabilities. There are 
+mainly two components of Hadoop which are Hadoop Distributed File System (HDFS) and Yet Another 
+Resource Negotiator(YARN).
+
+Hadoop was started with Doug Cutting and Mike Cafarella in the year 2002 when they both started 
+to work on Apache Nutch project. In January of 2008, Yahoo released Hadoop as an open source 
+project to ASF(Apache Software Foundation).
+
+----------------------------------------------------------------------------------------------
+
+1. Hadoop 1.x Architecture
+
+    Hadoop 1.x followed a master–slave architecture consisting mainly of:
+    i. HDFS Layer
+        NameNode → Metadata management
+        DataNode → Actual data storage
+
+    ii. MapReduce Processing Layer
+        JobTracker (master)
+        TaskTracker (slave)
+
+JobTracker Responsibilities:
+-> Job scheduling and monitoring
+-> Resource allocation
+-> Task coordination across nodes
+-> Failure handling
+
+TaskTracker Responsibilities: 
+-> Executed map and reduce tasks
+-> Reported status back to JobTracker
+-> Managed task slots on worker nodes
+
+Limitations of Hadoop 1.x:
+1. Single Point of Failure: JobTracker failure stopped all processing.
+2. Scalability Constraints: JobTracker became a bottleneck with large clusters.
+3. Limited Resource Utilization: Fixed map/reduce slots caused inefficient usage.
+4. MapReduce Dependency: Only MapReduce supported (no flexibility for other frameworks).
+
+----------------------------------------------------------------------------------------------
+
+2. Hadoop 2.x Architecture
+
+    Major Evolution: Introduction of YARN
+    YARN (Yet Another Resource Negotiator) separated:
+        i. Resource management
+        ii. Job scheduling/execution
+    This solved Hadoop 1.x bottlenecks.
+
+Key Components Introduced:
+    ResourceManager:
+        Functions:
+            -> Resource allocation
+            -> Scheduling applications
+            -> Managing cluster capacity
+
+        Two subcomponents:
+            -> Scheduler
+            -> Application Manager
+
+    NodeManager: 
+        Runs on each worker node.
+        Functions:
+            -> Resource monitoring
+            -> Container management
+            -> Health reporting
+
+    ApplicationMaster:
+        New concept in Hadoop 2.x:
+        -> One per application
+        -> Negotiates resources with ResourceManager
+        -> Coordinates tasks execution
+
+Advantages Over Hadoop 1.x:
+1. Improved Scalability: Decentralized job execution.
+2. Better Resource Utilization: Dynamic containers replaced fixed slots.
+3. Multiple Processing Frameworks: Supports MapReduce, Spark, Tez, Flink, etc.
+4. Fault Tolerance Improvements: ResourceManager recovery mechanisms.
+
+----------------------------------------------------------------------------------------------
+
+3. Hadoop 3.x Architecture
+
+    Hadoop 3.x builds upon YARN architecture with further improvements.
+
+Major Enhancements:
+    -> Multiple standby master nodes
+    -> Reduced downtime risk
+        
+Storage Efficiency:
+    Introduction of Erasure Coding:
+        Instead of storing multiple full copies of data (replication), erasure coding:
+        Splits data into parts
+        Adds extra parity pieces
+        Allows recovery even if some parts are lost
+        -> Reduces storage overhead compared to replication
+        -> Maintains fault tolerance
+
+Improved Scalability:
+    -> Larger clusters supported
+    -> Better resource scheduling efficiency
+
+Performance Enhancements:
+    -> Faster job execution
+    -> Optimized container management
+
+Cloud Compatibility:
+    Better integration with Cloud storage and Containerized environments
+
